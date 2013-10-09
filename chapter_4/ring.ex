@@ -1,7 +1,7 @@
 defmodule Ring do
 
   def start(m, n, message) do
-    pid = spawn(__MODULE__, :start_process, [n])
+    pid = spawn(__MODULE__, :start_process, [n-1])
     pid <- {:message, message, m}
   end
 
@@ -25,7 +25,8 @@ defmodule Ring do
   def loop(next_pid) do
     receive do
       {:message, _, 0} -> 
-        true
+        IO.puts "shutting down #{inspect next_pid}"
+        next_pid <- {:message, "", 0}
       {:message, message, m} -> 
         IO.puts "m: #{m}. next_pid: #{inspect next_pid}"
         next_pid <- {:message, message, m-1}
