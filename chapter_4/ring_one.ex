@@ -1,6 +1,6 @@
-defmodule Ring do
+defmodule RingOne do
 
-  def start(m, n, message) do
+  def run(m, n, message) do
     pid = spawn(__MODULE__, :start_process, [n-1])
     pid <- {:message, message, m}
   end
