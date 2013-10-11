@@ -28,10 +28,12 @@ defmodule RingOne do
 
   def loop(next_pid) do
     receive do
-      {:message, _, 0} -> 
-        :ok  
+      {:message, message, 0} -> 
+        IO.puts "#{inspect self} shutting down. next_pid: #{inspect next_pid}."
+        next_pid <- {:message, message, 0}
+        :ok
       {:message, message, m} -> 
-        IO.puts "m: #{m}. next_pid: #{inspect next_pid}"
+        IO.puts "m: #{m}. self: #{inspect self}. next_pid: #{inspect next_pid}."
         next_pid <- {:message, message, m-1}
         loop(next_pid)
     end

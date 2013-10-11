@@ -19,8 +19,9 @@ defmodule RingTwo do
 
   def loop(next_pid) do
     receive do
-      {:message, _, 0} -> 
-        IO.puts "bye bye!"
+      {:message, message, 0} -> 
+        IO.puts "#{inspect self} shutting down. next_pid: #{inspect next_pid}."
+        next_pid <- {:message, message, 0}
         :ok
       {:message, message, m} -> 
         IO.puts "m: #{m}. self: #{inspect self}. next_pid: #{inspect next_pid}."
